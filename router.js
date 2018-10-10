@@ -15,15 +15,14 @@ const fs=require('fs');
 var corsOptions = {
     credentials: true
 }
+
 router.use((req, res, next) => {
     corsOptions['origin'] = req.get('origin')
     next()
 }, cors(corsOptions))
+
 router.post('/login', (req, res) => {
-    const {
-        username,
-        password
-    } = req.body
+    const {username,password} = req.body
     if (!(username) || !(password)) {
         res.status(403).json({
             'message': 'Please Kindly enter correct password and username'
@@ -35,11 +34,14 @@ router.post('/login', (req, res) => {
         'token': token
     })
 })
+
 router.post('/patch', IsAuthenticated, (req, res) => {
     const {
         body,
-        patch
+        patch,
+
     } = req.body
+    
     if (!(body) || !(patch)) {
         res.status(403).json({
             'message': 'Both body and patch are required fields'
